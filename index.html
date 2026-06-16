@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latte 寄宿照護手冊 🐾</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FBF7F0;
+    --warm-white: #FFFCF7;
+    --latte-brown: #8B5E3C;
+    --latte-light: #C4956A;
+    --latte-pale: #F2E8DC;
+    --latte-tan: #E8D5BC;
+    --green-ok: #4A7C59;
+    --green-light: #EAF4EE;
+    --red-no: #C0392B;
+    --red-light: #FDEDEC;
+    --amber: #E67E22;
+    --amber-light: #FEF9E7;
+    --text-dark: #2C1A0E;
+    --text-mid: #5C3D2E;
+    --text-light: #8C6B5A;
+    --border: #DFC9B0;
+    --shadow: 0 2px 16px rgba(139,94,60,0.10);
+    --shadow-card: 0 4px 24px rgba(139,94,60,0.13);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--cream);
+    font-family: 'Noto Sans TC', sans-serif;
+    color: var(--text-dark);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--latte-brown) 0%, #6B3F22 60%, #4A2810 100%);
+    color: white;
+    padding: 48px 24px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -40px;
+    width: 280px; height: 280px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 50%;
+  }
+  .hero-paw {
+    font-size: 52px;
+    margin-bottom: 10px;
+    display: block;
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .hero h1 {
+    font-family: 'Nunito', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    margin-bottom: 6px;
+  }
+  .hero .date-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 6px 20px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-top: 10px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── PROFILE CARD ── */
+  .profile-strip {
+    background: var(--warm-white);
+    border-bottom: 2px solid var(--border);
+    padding: 24px 24px;
+  }
+  .profile-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .profile-item {
+    text-align: center;
+    background: var(--latte-pale);
+    border-radius: 12px;
+    padding: 14px 10px;
+  }
+  .profile-item .label {
+    font-size: 0.72rem;
+    color: var(--text-light);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+  .profile-item .value {
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--latte-brown);
+  }
+
+  /* ── LAYOUT ── */
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 16px 60px;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    margin-top: 28px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--latte-tan);
+  }
+  .section-icon {
+    width: 36px; height: 36px;
+    background: var(--latte-brown);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--latte-brown);
+    letter-spacing: 0.02em;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--warm-white);
+    border-radius: 14px;
+    padding: 18px 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+  .card-title {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: var(--text-mid);
+    margin-bottom: 12px;
+  }
+
+  /* ── TABLE ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  th {
+    background: var(--latte-pale);
+    color: var(--latte-brown);
+    font-weight: 700;
+    padding: 9px 12px;
+    text-align: left;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  th:first-child { border-radius: 8px 0 0 0; }
+  th:last-child  { border-radius: 0 8px 0 0; }
+  td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--latte-tan);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--latte-pale); }
+
+  /* ── MEAL SCHEDULE ── */
+  .meal-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--latte-tan);
+  }
+  .meal-row:last-child { border-bottom: none; }
+  .meal-time {
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: var(--latte-brown);
+    min-width: 70px;
+  }
+  .meal-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-light);
+    letter-spacing: 0.05em;
+  }
+  .meal-amount {
+    margin-left: auto;
+    background: var(--latte-pale);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    color: var(--latte-brown);
+    font-size: 0.95rem;
+  }
+
+  /* ── BADGES ── */
+  .badge {
+    display: inline-block;
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+  .badge-ok  { background: var(--green-light); color: var(--green-ok); }
+  .badge-no  { background: var(--red-light);   color: var(--red-no); }
+  .badge-warn{ background: var(--amber-light);  color: var(--amber); }
+
+  /* ── SNACK LIST ── */
+  .snack-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .snack-item {
+    border-radius: 10px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.88rem;
+  }
+  .snack-item.ok  { background: var(--green-light); border: 1px solid #C3E8CE; }
+  .snack-item.no  { background: var(--red-light);   border: 1px solid #FADBD8; }
+  .snack-icon { font-size: 1.2rem; flex-shrink: 0; }
+  .snack-name { font-weight: 700; color: var(--text-dark); margin-bottom: 2px; }
+  .snack-note { font-size: 0.76rem; color: var(--text-light); }
+
+  /* ── PERSONALITY BARS ── */
+  .trait-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .trait-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    min-width: 80px;
+    color: var(--text-mid);
+  }
+  .trait-bar {
+    flex: 1;
+    height: 10px;
+    background: var(--latte-tan);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .trait-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--latte-light), var(--latte-brown));
+    border-radius: 5px;
+    transition: width 1s ease;
+  }
+  .trait-stars {
+    font-size: 0.8rem;
+    min-width: 55px;
+    text-align: right;
+    color: var(--amber);
+  }
+
+  /* ── CHECKLIST ── */
+  .checklist { list-style: none; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--latte-tan);
+    font-size: 0.88rem;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist .box {
+    width: 18px; height: 18px;
+    border: 2px solid var(--latte-light);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .checklist .time-tag {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.78rem;
+    background: var(--latte-pale);
+    color: var(--latte-brown);
+    border-radius: 5px;
+    padding: 2px 7px;
+    white-space: nowrap;
+  }
+
+  /* ── ALERT BOX ── */
+  .alert {
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 10px;
+    font-size: 0.88rem;
+  }
+  .alert-icon { font-size: 1.2rem; flex-shrink: 0; }
+  .alert-text strong { display: block; margin-bottom: 3px; }
+  .alert.warn { background: var(--amber-light); border-left: 4px solid var(--amber); }
+  .alert.ok   { background: var(--green-light); border-left: 4px solid var(--green-ok); }
+  .alert.info { background: var(--latte-pale);  border-left: 4px solid var(--latte-light); }
+
+  /* ── EMERGENCY CARD ── */
+  .emergency {
+    background: linear-gradient(135deg, #2C1A0E, #4A2810);
+    color: white;
+    border-radius: 16px;
+    padding: 24px 20px;
+    margin-top: 28px;
+  }
+  .emergency h2 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .emergency-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .emergency-item {
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .emergency-item .e-label {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.6);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+  .emergency-item .e-value {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    color: white;
+  }
+  .emergency-item .e-sub {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.7);
+    margin-top: 2px;
+  }
+
+  /* ── FUN FACT ── */
+  .fun-fact {
+    background: var(--warm-white);
+    border: 2px solid var(--latte-tan);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-top: 28px;
+    text-align: center;
+  }
+  .fun-fact .big-emoji { font-size: 2.5rem; margin-bottom: 8px; }
+  .fun-fact p { font-size: 0.9rem; color: var(--text-mid); line-height: 1.6; }
+  .fun-fact strong { color: var(--latte-brown); }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 32px 16px;
+    font-size: 0.78rem;
+    color: var(--text-light);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 1.7rem; }
+    .profile-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .snack-grid { grid-template-columns: 1fr; }
+    .emergency-grid { grid-template-columns: 1fr; }
+    .profile-item .value { font-size: 0.9rem; }
+  }
+
+  @media print {
+    body { background: white; }
+    .hero { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-paw">🐾</span>
+  <h1>Latte 寄宿照護手冊</h1>
+  <p style="color:rgba(255,255,255,0.75); font-size:0.9rem; margin-top:6px;">迷你雪納瑞・保母專用版</p>
+  <div class="date-badge">📅 寄宿期間：2026 / 6 / 22 ～ 6 / 29</div>
+</div>
+
+<!-- PROFILE STRIP -->
+<div class="profile-strip">
+  <div class="profile-grid">
+    <div class="profile-item">
+      <div class="label">名字</div>
+      <div class="value">☕ Latte</div>
+    </div>
+    <div class="profile-item">
+      <div class="label">年齡</div>
+      <div class="value">11 個月</div>
+    </div>
+    <div class="profile-item">
+      <div class="label">體重</div>
+      <div class="value">6.2 kg</div>
+    </div>
+    <div class="profile-item">
+      <div class="label">性別</div>
+      <div class="value">公犬</div>
+    </div>
+    <div class="profile-item">
+      <div class="label">品種</div>
+      <div class="value">迷你雪納瑞</div>
+    </div>
+    <div class="profile-item">
+      <div class="label">如廁</div>
+      <div class="value">抬腿 🦵</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- 健康狀態 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">💉</div>
+      <div class="section-title">健康狀態</div>
+    </div>
+    <div class="card">
+      <table>
+        <thead>
+          <tr><th>項目</th><th>狀態</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>定期疫苗</td><td><span class="badge badge-ok">✅ 已施打</span></td></tr>
+          <tr><td>驅蟲藥</td><td><span class="badge badge-ok">✅ 有使用</span></td></tr>
+          <tr><td>結紮</td><td><span class="badge badge-warn">❌ 無</span></td></tr>
+          <tr><td>用藥／擦藥</td><td><span class="badge badge-ok">✅ 無需用藥</span></td></tr>
+          <tr><td>整體健康</td><td><span class="badge badge-ok">✅ 很健康</span></td></tr>
+          <tr><td>攻擊性</td><td><span class="badge badge-ok">✅ 完全沒有</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 用餐 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">🍽️</div>
+      <div class="section-title">用餐時間表（三餐餵食，時間可隨保母家稍微彈性調整）</div>
+    </div>
+    <div class="card">
+      <div class="meal-row">
+        <div>
+          <div class="meal-label">早餐</div>
+          <div class="meal-time">06:00</div>
+        </div>
+        <div style="font-size:0.85rem; color:var(--text-mid);">乾糧</div>
+        <div class="meal-amount">45 g</div>
+      </div>
+      <div class="meal-row">
+        <div>
+          <div class="meal-label">午餐</div>
+          <div class="meal-time">12:00</div>
+        </div>
+        <div style="font-size:0.85rem; color:var(--text-mid);">乾糧</div>
+        <div class="meal-amount">45 g</div>
+      </div>
+      <div class="meal-row">
+        <div>
+          <div class="meal-label">晚餐</div>
+          <div class="meal-time">18:00</div>
+        </div>
+        <div style="font-size:0.85rem; color:var(--text-mid);">乾糧</div>
+        <div class="meal-amount">45 g</div>
+      </div>
+    </div>
+
+    <div class="alert warn">
+      <div class="alert-icon">⚡</div>
+      <div class="alert-text">
+        <strong>吃飯速度很快！會準備慢食碗</strong>
+        飼料已準備好分裝，不需額外測量
+      </div>
+    </div>
+
+    <div class="alert info">
+      <div class="alert-icon">🫶</div>
+      <div class="alert-text">
+        <strong>腸胃較敏感</strong>
+        沒吃過的食物請先少量試吃，觀察 24–48 小時
+      </div>
+    </div>
+  </div>
+
+  <!-- 零食 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">🦴</div>
+      <div class="section-title">零食規則</div>
+    </div>
+    <div class="snack-grid">
+      <div class="snack-item ok">
+        <div class="snack-icon">✅</div>
+        <div>
+          <div class="snack-name">軟肉條</div>
+          <div class="snack-note">可當訓練獎勵使用</div>
+        </div>
+      </div>
+      <div class="snack-item ok">
+        <div class="snack-icon">✅</div>
+        <div>
+          <div class="snack-name">凍乾單一蛋白</div>
+          <div class="snack-note">狗狗最愛，可少量給</div>
+        </div>
+      </div>
+      <div class="snack-item ok">
+        <div class="snack-icon">✅</div>
+        <div>
+          <div class="snack-name">水煮雞胸肉</div>
+          <div class="snack-note">無調味，切小塊</div>
+        </div>
+      </div>
+      <div class="snack-item no">
+        <div class="snack-icon">❌</div>
+        <div>
+          <div class="snack-name">軟式潔牙骨</div>
+          <div class="snack-note">容易嗆到，禁止</div>
+        </div>
+      </div>
+      <div class="snack-item no">
+        <div class="snack-icon">❌</div>
+        <div>
+          <div class="snack-name">短截潔牙骨</div>
+          <div class="snack-note">怕一口吞、哽咽</div>
+        </div>
+      </div>
+      <div class="snack-item no">
+        <div class="snack-icon">❌</div>
+        <div>
+          <div class="snack-name">一大截肉乾</div>
+          <div class="snack-note">誤吞窒息風險高</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 外出 & 排泄 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">🚶</div>
+      <div class="section-title">外出 & 排泄</div>
+    </div>
+    <div class="card">
+      <div class="card-title">⚠️ Latte 不會自主去廁所或尿墊，需定時帶外出，基本上三餐後都會大便</div>
+      <table>
+        <thead><tr><th>時段</th><th>建議外出</th><th>備註</th></tr></thead>
+        <tbody>
+          <tr><td>早上</td><td>🚶 外出</td><td>早上6、7點如在家來回走動嗚嗚叫表示他很想上廁所</td></tr>
+          <tr><td>中午~下午</td><td>🚶 外出</td><td>午餐後</td></tr>
+          <tr><td>晚上</td><td>🚶 外出</td><td>晚餐後</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert warn">
+      <div class="alert-icon">👃</div>
+      <div class="alert-text">
+        <strong>外出時留意誤食！</strong>
+        Latte 非常喜歡聞東西，請全程牽繩，不讓他碰觸地上不明物品
+      </div>
+    </div>
+  </div>
+
+  <!-- 個性 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">🎾</div>
+      <div class="section-title">Latte 的個性</div>
+    </div>
+    <div class="card">
+      <div class="trait-row">
+        <div class="trait-label">親人程度</div>
+        <div class="trait-bar"><div class="trait-fill" style="width:100%"></div></div>
+        <div class="trait-stars">⭐⭐⭐⭐⭐</div>
+      </div>
+      <div class="trait-row">
+        <div class="trait-label">活潑好動</div>
+        <div class="trait-bar"><div class="trait-fill" style="width:100%"></div></div>
+        <div class="trait-stars">⭐⭐⭐⭐⭐</div>
+      </div>
+      <div class="trait-row">
+        <div class="trait-label">好奇心</div>
+        <div class="trait-bar"><div class="trait-fill" style="width:100%"></div></div>
+        <div class="trait-stars">⭐⭐⭐⭐⭐</div>
+      </div>
+      <div class="trait-row">
+        <div class="trait-label">與其他寵物</div>
+        <div class="trait-bar"><div class="trait-fill" style="width:80%"></div></div>
+        <div class="trait-stars">⭐⭐⭐⭐</div>
+      </div>
+      <div class="trait-row">
+        <div class="trait-label">攻擊性</div>
+        <div class="trait-bar"><div class="trait-fill" style="width:0%"></div></div>
+        <div class="trait-stars" style="color:var(--green-ok);">無</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:0;">
+      <div style="font-size:0.88rem; color:var(--text-mid); line-height:1.8;">
+        <div style="margin-bottom:8px;">👐 玩耍時喜歡<strong>輕咬人的手</strong>（友善行為，不是攻擊）</div>
+        <div style="margin-bottom:8px;">🐕 與其他寵物可以相處，但<strong>好奇心旺盛、太熱情</strong>，可能靜不下來，初期需要監看</div>
+        <div style="margin-bottom:8px;">💧 喜歡喝水</div>
+        <div>🏠 非常喜歡陪伴，請多跟他互動</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 睡眠 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">😴</div>
+      <div class="section-title">睡眠習慣</div>
+    </div>
+    <div class="alert ok">
+      <div class="alert-icon">🛏️</div>
+      <div class="alert-text">
+        <strong>習慣與人睡床</strong>
+        如果不給他睡大床，他會自己乖乖去睡小床——隨保母家安排都 OK！
+      </div>
+    </div>
+  </div>
+
+  <!-- 安全提醒 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">🚨</div>
+      <div class="section-title">環境安全提醒</div>
+    </div>
+    <div class="alert warn">
+      <div class="alert-icon">⚠️</div>
+      <div class="alert-text">
+        <strong>Latte 有誤食習慣！</strong>
+        太小的物品他可能直接吃掉，請確認環境中沒有以下東西在他可及範圍
+      </div>
+    </div>
+    <div class="card">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; font-size:0.85rem;">
+        <div style="background:var(--red-light); border-radius:8px; padding:8px 12px; color:var(--red-no);">🚫 小玩具零件</div>
+        <div style="background:var(--red-light); border-radius:8px; padding:8px 12px; color:var(--red-no);">🚫 橡皮筋、線圈</div>
+        <div style="background:var(--red-light); border-radius:8px; padding:8px 12px; color:var(--red-no);">🚫 骨頭碎片</div>
+        <div style="background:var(--red-light); border-radius:8px; padding:8px 12px; color:var(--red-no);">🚫 塑膠袋包裝</div>
+        <div style="background:var(--red-light); border-radius:8px; padding:8px 12px; color:var(--red-no);">🚫 清潔化學品</div>
+        <div style="background:var(--red-light); border-radius:8px; padding:8px 12px; color:var(--red-no);">🚫 硬幣、小飾品</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 每日待辦 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon">📋</div>
+      <div class="section-title">每日照護清單</div>
+    </div>
+    <div class="card">
+      <ul class="checklist">
+        <li>
+          <div class="box"></div>
+          <span class="time-tag">06:00</span>
+          <span>早餐 45g（慢食碗）＋外出大小便</span>
+        </li>
+        <li>
+          <div class="box"></div>
+          <span class="time-tag">12:00</span>
+          <span>午餐 45g（慢食碗）＋外出大小便</span>
+        </li>
+        <li>
+          <div class="box"></div>
+          <span class="time-tag">下午</span>
+          <span>玩耍互動（避免 12–15 點高溫時段外出）</span>
+        </li>
+        <li>
+          <div class="box"></div>
+          <span class="time-tag">18:00</span>
+          <span>晚餐 45g（慢食碗）＋外出大小便</span>
+        </li>
+        <li>
+          <div class="box"></div>
+          <span class="time-tag">全天</span>
+          <span>確認飲水充足</span>
+        </li>
+        <li>
+          <div class="box"></div>
+          <span class="time-tag">全天</span>
+          <span>便便正常？精神活潑？皮膚無異常？</span>
+        </li>
+      </ul>
+    </div>
+    <div class="card" style="margin-top:0;">
+      <div class="card-title">⚠️ 出現以下情況請立即聯絡飼主</div>
+      <ul class="checklist">
+        <li><div class="box"></div><span>嘔吐或腹瀉超過一次</span></li>
+        <li><div class="box"></div><span>不願進食（超過一餐）</span></li>
+        <li><div class="box"></div><span>行動遲緩、疼痛跡象</span></li>
+        <li><div class="box"></div><span>皮膚紅腫、搔癢惡化</span></li>
+        <li><div class="box"></div><span>排尿異常或尿不出來</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 開心彩蛋 -->
+  <div class="fun-fact">
+    <div class="big-emoji">🎉</div>
+    <p>外出散步回家後，<br>Latte 如果發出 <strong>「凹嗚嗚嗚～」</strong> 的聲音<br>代表他超開心！🥳</p>
+  </div>
+
+  <!-- 緊急聯絡 -->
+  <div class="emergency">
+    <h2>🆘 緊急聯絡資訊</h2>
+    <div class="emergency-grid">
+      <div class="emergency-item">
+        <div class="e-label">飼主</div>
+        <div class="e-value">楊于萱</div>
+        <div class="e-sub">📱 0989-630-107</div>
+      </div>
+      <div class="emergency-item">
+        <div class="e-label">動物醫院</div>
+        <div class="e-value">毛孩子動物醫院</div>
+        <div class="e-sub">📍 三重區福德北路71號</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  🐾 謝謝你照顧 Latte！他很乖，一定不會讓你費心的 ☕<br>
+  <span style="font-size:0.72rem; color:var(--latte-light); margin-top:4px; display:block;">Latte Care System · 2026/6/22–6/29</span>
+</div>
+
+</body>
+</html>
